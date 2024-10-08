@@ -1,15 +1,22 @@
+import requests
+from bs4 import BeautifulSoup
+
 def scrape_apartment_info(url):
     response = requests.get(url)
+    if response.status_code != 200:
+        return {"nom": "Inconnu", "adresse": "Inconnue", "loyer": 0, "surface": 0}
+
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    try:
-        nom = soup.find('h1').text.strip()
-        adresse = soup.find('div', class_='adresse').text.strip()
-        loyer = int(soup.find('span', class_='prix').text.replace('€', '').replace(' ', '').strip())
-        surface = float(soup.find('span', class_='surface').text.replace('m²', '').replace(' ', '').strip())
-    except AttributeError as e:
-        raise ValueError("Erreur lors de l'extraction des données : " + str(e))
-    except ValueError as e:
-        raise ValueError("Erreur de formatage des données : " + str(e))
+    # Exemples de sélection d'éléments, modifiez cela selon la structure de votre site cible
+    nom = soup.find("h1", class_="nom").text.strip() if soup.find("h1", class_="nom") else "Inconnu"
+    adresse = soup.find("p", class_="adresse").text.strip() if soup.find("p", class_="adresse") else "Inconnue"
+    loyer = int(soup.find("span", class_="loyer").text.strip().replace("€", "").replace(" ", "")) if soup.find("span", class_="loyer") else 0
+    surface = float(soup.find("span", class_="surface").text.strip().replace(" m²", "").replace(",", ".")) if soup.find("span", class_="surface") else 0
 
-    return {'nom': nom, 'adresse': adresse, 'loyer': loyer, 'surface': surface}
+    return {
+        "nom": nom,
+        "adresse": adresse,
+        "loyer": loyer,
+        "surface": surface
+    }

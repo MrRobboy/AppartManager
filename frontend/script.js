@@ -8,14 +8,18 @@ function addApartment() {
         },
         body: JSON.stringify({ url: url }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur dans la réponse du serveur : ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
         alert(data.message);
-        // Optionnel : Rafraîchir la liste des appartements après ajout
-        loadApartments();
+        loadApartments();  // Rafraîchir la liste des appartements après ajout
     })
     .catch(error => {
-        console.error('Error adding apartment:', error);
+        console.error('Erreur lors de l\'ajout de l\'appartement:', error);
         alert('Erreur lors de l\'ajout de l\'appartement: ' + error.message);
     });
 }
@@ -24,9 +28,7 @@ function loadApartments() {
     fetch('/get_apartments')
         .then(response => {
             if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error('Network response was not ok: ' + response.status + ' - ' + text);
-                });
+                throw new Error('Erreur dans la réponse du serveur : ' + response.statusText);
             }
             return response.json();
         })
@@ -48,7 +50,7 @@ function loadApartments() {
             });
         })
         .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
+            console.error('Erreur de chargement des appartements:', error);
             alert('Erreur de chargement des appartements: ' + error.message);
         });
 }
