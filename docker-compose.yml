@@ -1,20 +1,13 @@
 version: '3'
+
 services:
   backend:
     build:
-      context: ./backend  # Utilise ./backend pour le répertoire relatif
-    container_name: appartement_manager_backend
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"  # Port exposé pour le backend Flask
-    volumes:
-      - ./backend:/app
-    restart: always
-
+      - "5000:5000"
   frontend:
-    image: nginx:alpine  # Utiliser Nginx pour servir le frontend
-    container_name: appartement_manager_frontend
+    image: your-frontend-image
     ports:
-      - "80:80"  # Port exposé pour le frontend
-    volumes:
-      - ./frontend:/usr/share/nginx/html  # Servir le contenu du répertoire frontend
-    restart: always
+      - "80:80"
