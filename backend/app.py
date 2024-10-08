@@ -85,7 +85,7 @@ def export_csv():
                                  appartement['statut'], appartement['derniere_modification']])
         return jsonify({'message': 'Export réussi !'})
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f'Une erreur est survenue lors de l\'exportation : {str(e)}'}), 500
 
 if __name__ == '__main__':
     create_tables()

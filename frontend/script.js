@@ -13,6 +13,10 @@ function addApartment() {
         alert(data.message);
         // Optionnel : Rafraîchir la liste des appartements après ajout
         loadApartments();
+    })
+    .catch(error => {
+        console.error('Error adding apartment:', error);
+        alert('Erreur lors de l\'ajout de l\'appartement: ' + error.message);
     });
 }
 
@@ -20,7 +24,9 @@ function loadApartments() {
     fetch('/get_apartments')
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.statusText);
+                return response.text().then(text => {
+                    throw new Error('Network response was not ok: ' + response.status + ' - ' + text);
+                });
             }
             return response.json();
         })
@@ -43,9 +49,9 @@ function loadApartments() {
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
+            alert('Erreur de chargement des appartements: ' + error.message);
         });
 }
-
 
 // Charger les appartements au démarrage
 window.onload = loadApartments;
