@@ -1,75 +1,64 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #121212;
+    /* Couleur sombre pour le fond */
     color: #ffffff;
+    /* Couleur claire pour le texte */
     margin: 0;
     padding: 20px;
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    text-align: center;
-}
-
 h1 {
-    margin-bottom: 20px;
-}
-
-.form-container {
-    margin: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-input[type="text"] {
-    padding: 10px;
-    border: 1px solid #4CAF50;
-    border-radius: 5px;
-    background-color: #1E1E1E;
-    color: #ffffff;
-    width: 300px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    text-align: center;
+    color: #e0e0e0;
 }
 
 .appartement-card {
-    background-color: #1E1E1E;
-    border: 1px solid #4CAF50;
-    border-radius: 8px;
+    background: #1e1e1e;
+    /* Couleur de fond pour les cartes */
+    border: 1px solid #333;
+    /* Bordure sombre */
+    border-radius: 5px;
+    margin: 10px;
     padding: 15px;
-    transition: transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s;
 }
 
 .appartement-card:hover {
     transform: scale(1.05);
+    /* Zoom léger au survol */
 }
 
 .appartement-card h3 {
-    margin: 0;
-    font-size: 18px;
+    margin: 0 0 10px;
 }
 
 .appartement-card p {
     margin: 5px 0;
+}
+
+.container {
+    display: grid;
+    /* Utilisation du système de grille */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Grille flexible */
+    gap: 10px;
+    /* Espacement entre les cartes */
+}
+
+button {
+    background-color: #6200ee;
+    /* Couleur des boutons */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #3700b3;
+    /* Couleur au survol */
 }
