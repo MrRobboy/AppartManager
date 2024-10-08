@@ -2,7 +2,7 @@ version: '3'
 services:
   backend:
     build:
-      context: ./backend
+      context: ./backend  # Utilise ./backend pour le répertoire relatif
     container_name: appartement_manager_backend
     ports:
       - "5000:5000"  # Port exposé pour le backend Flask
