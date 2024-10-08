@@ -29,7 +29,7 @@ def add_apartment():
     conn = get_db_connection()
     conn.execute('''INSERT INTO appartements (url, reference, agency, loyer, surface, statut, derniere_modification)
                     VALUES (?, ?, ?, ?, ?, ?, datetime('now'))''',
-                 (data['url'], data['reference'], data['agency'], data['rent'], data['area'], 'en_attente'))
+                 (data['url'], data['reference'], data['agency'], data['loyer'], data['surface'], 'en_attente'))
     conn.commit()
     conn.close()
     return jsonify({'message': 'Appartement ajouté avec succès'})

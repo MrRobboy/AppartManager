@@ -4,13 +4,13 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: DockerFile  # Assurez-vous que c'est 'Dockerfile' avec un "d" minuscule
+      dockerfile: Dockerfile  # Assurez-vous que c'est 'Dockerfile' avec un "d" minuscule
     ports:
       - "5000:5000"
   
   frontend:
     build:  # Construire l'image à partir du Dockerfile dans le répertoire frontend
       context: ./frontend
-      dockerfile: DockerFile  # Remplacez par le nom correct si différent
+      dockerfile: Dockerfile  # Assurez-vous que le nom est correct
     ports:
       - "80:80"
