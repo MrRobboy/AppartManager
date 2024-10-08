@@ -11,6 +11,6 @@ services:
   frontend:
     build:  # Construire l'image à partir du Dockerfile dans le répertoire frontend
       context: ./frontend
-      dockerfile: Dockerfile  # Remplacez par le nom correct si différent
+      dockerfile: DockerFile  # Remplacez par le nom correct si différent
     ports:
       - "80:80"
