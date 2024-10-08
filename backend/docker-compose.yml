@@ -1,19 +1,20 @@
 version: '3'
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
     container_name: appartement_manager_backend
     ports:
-      - "5000:5000"
+      - "5000:5000"  # Port exposé pour le backend Flask
     volumes:
       - ./backend:/app
     restart: always
 
   frontend:
-    image: nginx:alpine
+    image: nginx:alpine  # Utiliser Nginx pour servir le frontend
     container_name: appartement_manager_frontend
-    volumes:
-      - ./frontend:/usr/share/nginx/html
     ports:
-      - "80:80"
+      - "80:80"  # Port exposé pour le frontend
+    volumes:
+      - ./frontend:/usr/share/nginx/html  # Servir le contenu du répertoire frontend
     restart: always
