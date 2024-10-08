@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile  # Assurez-vous que c'est 'Dockerfile' avec un "d" minuscule
+      dockerfile: DockerFile  # Assurez-vous que c'est 'Dockerfile' avec un "d" minuscule
     ports:
       - "5000:5000"
   
