@@ -17,8 +17,13 @@ function addApartment() {
 }
 
 function loadApartments() {
-    fetch('/get_apartments') // Assurez-vous d'ajouter cette route dans votre backend
-        .then(response => response.json())
+    fetch('/get_apartments')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
             const container = document.getElementById('appartements-attente');
             container.innerHTML = ''; // Réinitialiser le contenu
@@ -35,8 +40,12 @@ function loadApartments() {
                 `;
                 container.appendChild(card);
             });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
         });
 }
+
 
 // Charger les appartements au démarrage
 window.onload = loadApartments;
