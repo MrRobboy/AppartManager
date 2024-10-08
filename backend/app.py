@@ -14,20 +14,22 @@ def create_tables():
     with conn:
         conn.execute('''CREATE TABLE IF NOT EXISTS appartements (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            ville TEXT, nom TEXT, adresse TEXT,
+                            url TEXT, reference TEXT, agency TEXT,
                             loyer INTEGER, surface REAL,
-                            agence TEXT, url_annonce TEXT,
                             statut TEXT, derniere_modification TEXT)''')
+        conn.execute('''CREATE TABLE IF NOT EXISTS logs (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            action TEXT, appartement_id INTEGER,
+                            date TEXT, details TEXT)''')
     conn.close()
 
 @app.route('/add_apartment', methods=['POST'])
 def add_apartment():
     data = request.json
-    # En supposant que les champs nom, adresse et statut sont fournis
     conn = get_db_connection()
-    conn.execute('''INSERT INTO appartements (ville, nom, adresse, loyer, surface, agence, url_annonce, statut, derniere_modification)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))''',
-                 (data['ville'], data['nom'], data['adresse'], data['loyer'], data['surface'], data['agence'], data['url_annonce'], 'en_attente'))
+    conn.execute('''INSERT INTO appartements (url, reference, agency, loyer, surface, statut, derniere_modification)
+                    VALUES (?, ?, ?, ?, ?, ?, datetime('now'))''',
+                 (data['url'], data['reference'], data['agency'], data['rent'], data['area'], 'en_attente'))
     conn.commit()
     conn.close()
     return jsonify({'message': 'Appartement ajouté avec succès'})
@@ -38,6 +40,49 @@ def get_apartments():
     appartements = conn.execute('SELECT * FROM appartements').fetchall()
     conn.close()
     return jsonify([dict(appartement) for appartement in appartements])
+
+@app.route('/update_status/<int:id>', methods=['PUT'])
+def update_status(id):
+    statut = request.json['statut']
+    conn = get_db_connection()
+    conn.execute('UPDATE appartements SET statut = ?, derniere_modification = datetime("now") WHERE id = ?', 
+                 (statut, id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Statut mis à jour'})
+
+@app.route('/delete_apartment/<int:id>', methods=['DELETE'])
+def delete_apartment(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM appartements WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Appartement supprimé'})
+
+@app.route('/logs', methods=['GET'])
+def get_logs():
+    conn = get_db_connection()
+    logs = conn.execute('SELECT * FROM logs').fetchall()
+    conn.close()
+    return jsonify([dict(log) for log in logs])
+
+@app.route('/export_csv', methods=['GET'])
+def export_csv():
+    try:
+        conn = get_db_connection()
+        appartements = conn.execute('SELECT * FROM appartements').fetchall()
+        conn.close()
+
+        with open('appartements.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['ID', 'URL', 'Référence', 'Agence', 'Loyer', 'Surface', 'Statut', 'Dernière Modification'])
+            for appartement in appartements:
+                writer.writerow([appartement['id'], appartement['url'], appartement['reference'],
+                                 appartement['agency'], appartement['loyer'], appartement['surface'],
+                                 appartement['statut'], appartement['derniere_modification']])
+        return jsonify({'message': 'Export réussi !'})
+    except Exception as e:
+        return jsonify({'error': f'Une erreur est survenue lors de l\'exportation : {str(e)}'}), 500
 
 if __name__ == '__main__':
     create_tables()

@@ -64,5 +64,16 @@ function loadApartments() {
         });
 }
 
+// Fonction de recherche
+document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.appartement-card');
+
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
+    });
+});
+
 // Charger les appartements au démarrage
 window.onload = loadApartments;

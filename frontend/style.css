@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
@@ -8,43 +12,29 @@ body {
     padding: 20px;
 }
 
-h1 {
+header {
     text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
     color: #e0e0e0;
 }
 
-.appartement-card {
-    background: #1e1e1e;
-    /* Couleur de fond pour les cartes */
+.form-container,
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
     border: 1px solid #333;
-    /* Bordure sombre */
     border-radius: 5px;
-    margin: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    transition: transform 0.2s;
-}
-
-.appartement-card:hover {
-    transform: scale(1.05);
-    /* Zoom léger au survol */
-}
-
-.appartement-card h3 {
-    margin: 0 0 10px;
-}
-
-.appartement-card p {
-    margin: 5px 0;
-}
-
-.container {
-    display: grid;
-    /* Utilisation du système de grille */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    /* Grille flexible */
-    gap: 10px;
-    /* Espacement entre les cartes */
+    width: 80%;
 }
 
 button {
@@ -61,4 +51,37 @@ button {
 button:hover {
     background-color: #3700b3;
     /* Couleur au survol */
+}
+
+.container {
+    display: grid;
+    /* Utilisation du système de grille */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Grille flexible */
+    gap: 10px;
+    /* Espacement entre les cartes */
+}
+
+.appartement-card {
+    background: #1e1e1e;
+    /* Couleur de fond pour les cartes */
+    border: 1px solid #333;
+    /* Bordure sombre */
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s;
+}
+
+.appartement-card:hover {
+    transform: scale(1.05);
+    /* Zoom léger au survol */
+}
+
+.appartement-card h3 {
+    margin: 0 0 10px;
+}
+
+.appartement-card p {
+    margin: 5px 0;
 }

@@ -9,18 +9,23 @@
 </head>
 
 <body>
-    <h1>Gestion des Appartements</h1>
-    <div>
-        <input type="text" id="url" placeholder="URL de l'annonce" required>
-        <input type="text" id="reference" placeholder="Référence de l'annonce" required>
-        <input type="text" id="agency" placeholder="Nom de l'agence" required>
-        <input type="number" id="rent" placeholder="Loyer" required>
-        <input type="number" id="area" placeholder="Surface (m²)" required>
-        <button onclick="addApartment()">Ajouter Appartement</button>
-    </div>
-
-    <div class="container" id="appartements-grid"></div>
-
+    <header>
+        <h1>Gestion des Appartements</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <input type="text" id="url" placeholder="URL de l'annonce" required>
+            <input type="text" id="reference" placeholder="Référence de l'annonce" required>
+            <input type="text" id="agency" placeholder="Nom de l'agence" required>
+            <input type="number" id="rent" placeholder="Loyer (€)" required>
+            <input type="number" id="area" placeholder="Surface (m²)" required>
+            <button onclick="addApartment()">Ajouter Appartement</button>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Rechercher un appartement...">
+        </div>
+        <div class="container" id="appartements-grid"></div>
+    </main>
     <script src="script.js"></script>
 </body>
 
