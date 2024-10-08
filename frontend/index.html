@@ -9,15 +9,17 @@
 </head>
 
 <body>
-    <h1>Gestion des Appartements</h1>
+    <div class="container">
+        <h1>Gestion des Appartements</h1>
 
-    <div class="form-container">
-        <input type="text" id="url" placeholder="Entrez l'URL de l'appartement">
-        <button onclick="addApartment()">Ajouter Appartement</button>
+        <div class="form-container">
+            <input type="text" id="url" placeholder="Entrez l'URL de l'appartement">
+            <button onclick="addApartment()">Ajouter Appartement</button>
+        </div>
+
+        <h2>Appartements en attente</h2>
+        <div id="appartements-attente" class="grid-container"></div>
     </div>
-
-    <h2>Appartements en attente</h2>
-    <div id="appartements-attente"></div>
 
     <script src="script.js"></script>
 </body>

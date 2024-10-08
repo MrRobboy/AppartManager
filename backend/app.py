@@ -30,15 +30,20 @@ def create_tables():
 @app.route('/add_apartment', methods=['POST'])
 def add_apartment():
     data = request.json
-    info = scrape_apartment_info(data['url'])
-    
-    conn = get_db_connection()
-    conn.execute('''INSERT INTO appartements (url, nom, adresse, loyer, surface, statut, derniere_modification)
-                    VALUES (?, ?, ?, ?, ?, ?, datetime('now'))''',
-                 (data['url'], info['nom'], info['adresse'], info['loyer'], info['surface'], 'en_attente'))
-    conn.commit()
-    conn.close()
-    return jsonify({'message': 'Appartement ajouté avec succès'})
+    try:
+        # Scrape les informations de l'appartement
+        info = scrape_apartment_info(data['url'])
+        
+        # Connexion à la base de données et insertion des données
+        conn = get_db_connection()
+        conn.execute('''INSERT INTO appartements (url, nom, adresse, loyer, surface, statut, derniere_modification)
+                        VALUES (?, ?, ?, ?, ?, ?, datetime('now'))''',
+                     (data['url'], info['nom'], info['adresse'], info['loyer'], info['surface'], 'en_attente'))
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'Appartement ajouté avec succès'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400  # Code d'erreur 400 pour les demandes incorrectes
 
 # Route pour modifier le statut d'un appartement
 @app.route('/update_status/<int:id>', methods=['PUT'])
